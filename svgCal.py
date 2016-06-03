@@ -13,13 +13,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import cal
+import exceptions
+
 
 def main():
     filename = 'test.svg'
     svgFile = cal.load_svg(filename)
     res = cal.calculate(svgFile)
     print(res)
-    return 0
+
 
 if __name__ == '__main__':
     main()

@@ -14,12 +14,18 @@
 
 
 from xml.dom.minidom import parse
+from xml.parsers.expat import ExpatError
+
+import exceptions
 
 
 def load_svg(filename):
-    svgDoc = parse(filename)
-    rootNode = svgDoc.documentElement
-    return rootNode
+    try:
+        svgDoc = parse(filename)
+        rootNode = svgDoc.documentElement
+        return rootNode
+    except ExpatError as e:
+        print('error')
 
 
 def calculate(svgFile):
