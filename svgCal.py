@@ -17,7 +17,7 @@ import exceptions
 
 
 def main():
-    filename = 'test.svg'
+    filename = 'svgFiles\\test.svg'
     svgFile = cal.load_svg(filename)
     res = cal.calculate(svgFile)
     print(res)
