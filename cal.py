@@ -12,14 +12,25 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-import cal
 
-def main():
-    filename = 'test.svg'
-    svgFile = cal.load_svg(filename)
-    res = cal.calculate(svgFile)
-    print(res)
-    return 0
+from xml.dom.minidom import parse
 
-if __name__ == '__main__':
-    main()
+
+def load_svg(filename):
+    svgDoc = parse(filename)
+    rootNode = svgDoc.documentElement
+    return rootNode
+
+
+def calculate(svgFile):
+    dimensions = get_dimensions(svgFile)
+
+
+def get_dimensions(svgFile):
+    height = svgFile.getAttribute('height')
+    width = svgFile.getAttribute('width')
+    # TODO: unit conversions
+    height = height.replace('mm', '')
+    width = width.replace('mm', '')
+    dim = [float(width), float(height)]
+    return dim
