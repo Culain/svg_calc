@@ -14,6 +14,7 @@
 
 import cal
 # import exceptions
+# from tkinter import *
 
 
 def main():
@@ -25,3 +26,15 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+''' meine Baustelle -lordfwahfnah
+
+class gui:
+    def __init__(self, master):
+        self.file = ""
+
+main_window = Tk()
+root = gui(main_window)
+main_window.mainloop()
+
+'''
