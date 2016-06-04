@@ -16,7 +16,7 @@
 from xml.dom.minidom import parse
 from xml.parsers.expat import ExpatError
 
-import exceptions
+# import exceptions
 
 
 def load_svg(filename):
