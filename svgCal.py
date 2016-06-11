@@ -13,28 +13,23 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 import cal
+import gui
 # import exceptions
-# from tkinter import *
 
 
 def main():
     filename = 'svgFiles\\test.svg'
-    svgFile = cal.load_svg(filename)
-    res = cal.calculate(svgFile)
+    svgfile = cal.load_svg(filename)
+    res = cal.calculate(svgfile)
     print(res)
+
+    #     ==GUI stuff== uncomment to disable
+    o_gui = gui.Gui()
 
 
 if __name__ == '__main__':
     main()
 
-''' meine Baustelle -lordfwahfnah
+# meine Baustelle -lordfwahfnah
 
-class gui:
-    def __init__(self, master):
-        self.file = ""
 
-main_window = Tk()
-root = gui(main_window)
-main_window.mainloop()
-
-'''

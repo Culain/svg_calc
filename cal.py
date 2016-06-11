@@ -21,20 +21,20 @@ from xml.parsers.expat import ExpatError
 
 def load_svg(filename):
     try:
-        svgDoc = parse(filename)
-        rootNode = svgDoc.documentElement
-        return rootNode
+        svgdoc = parse(filename)
+        rootnode = svgdoc.documentElement
+        return rootnode
     except ExpatError as e:
         print('error')
 
 
-def calculate(svgFile):
-    dimensions = get_dimensions(svgFile)
+def calculate(svgfile):
+    dimensions = get_dimensions(svgfile)
 
 
-def get_dimensions(svgFile):
-    height = svgFile.getAttribute('height')
-    width = svgFile.getAttribute('width')
+def get_dimensions(svgfile):
+    height = svgfile.getAttribute('height')
+    width = svgfile.getAttribute('width')
     # TODO: unit conversions
     height = height.replace('mm', '')
     width = width.replace('mm', '')
