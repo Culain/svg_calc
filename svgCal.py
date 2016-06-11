@@ -23,8 +23,7 @@ def main():
     res = cal.calculate(svgfile)
     print(res)
 
-    #     ==GUI stuff== uncomment to disable
-    o_gui = gui.Gui()
+    o_gui = gui.Gui()  # ===GUI stuff=== uncomment to disable
 
 
 if __name__ == '__main__':
