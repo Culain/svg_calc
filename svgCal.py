@@ -15,10 +15,16 @@
 import cal
 import gui
 # import exceptions
+from sys import platform
 
 
 def main():
-    filename = 'svgFiles\\test.svg'
+    filename = ''
+    if platform.startswith('win32'):
+        filename = 'svgFiles\\test.svg'
+    elif platform.startswith('linux'):
+        filename = 'svgFiles/test.svg'
+
     svgfile = cal.load_svg(filename)
     res = cal.calculate(svgfile)
     print(res)
@@ -28,7 +34,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-# meine Baustelle -lordfwahfnah
-
-
