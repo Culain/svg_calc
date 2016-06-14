@@ -28,12 +28,17 @@ class Gui:
 
         menu = Menu(root)  # Menu
         root.config(menu=menu)
-        submenu = Menu(menu)
-        menu.add_cascade(label="File", menu=submenu)
-        submenu.add_command(label="Open ", command=self.askopenfile)
-        submenu.add_command(label="Print Preview", command=self.plot_preview)
-        submenu.add_separator()
-        submenu.add_command(label="Exit", command=frame.quit)
+        submenu_file = Menu(menu)
+        submenu_help = Menu(menu)
+        # =============== File
+        menu.add_cascade(label="File", menu=submenu_file)
+        submenu_file.add_command(label="Open", command=self.askopenfile)
+        submenu_file.add_command(label="Print Preview", command=self.plot_preview)
+        submenu_file.add_separator()
+        submenu_file.add_command(label="Exit", command=frame.quit)
+        # ================ Help
+        menu.add_cascade(label="Help", menu=submenu_help)
+        submenu_help.add_command(label="About", command=self.aboutus)
 
         root.mainloop()  # loop to keep the Window open
 
@@ -45,3 +50,6 @@ class Gui:
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass
+
+    def aboutus(self):
+        messagebox.showinfo("About", "SVG Calculator\nCoded by: Culain and Civ0")
