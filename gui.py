@@ -48,7 +48,7 @@ class Gui:
             self.svgfile = filedialog.askopenfile(mode='r', filetypes=(("SVG Datei", "*.svg"), ("All files", "*.*")))
         except:  # TODO: except only fileerror
             messagebox("Couldn't read file.")
-        cal.calculate(self.svgfile)
+        # TODO: Add some code here to work with the file
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass
