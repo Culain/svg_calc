@@ -16,16 +16,24 @@ import cal
 import gui
 # import exceptions
 from sys import platform
+from xml.parsers.expat import ExpatError
 
 
 def main():
     filename = ''
     if platform.startswith('win32'):
         filename = 'svgFiles\\test.svg'
+        # filename = 'svgFiles\\corrupt.svg'
     elif platform.startswith('linux'):
         filename = 'svgFiles/test.svg'
 
-    svgfile = cal.load_svg(filename)
+    try:
+        svgfile = cal.load_svg(filename)
+    except ExpatError:
+        print("Error while reading the file")
+        exit()
+
+
     res = cal.calculate(svgfile)
     print(res)
 

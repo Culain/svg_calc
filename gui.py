@@ -15,6 +15,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+import cal
 
 
 class Gui:
@@ -47,9 +48,10 @@ class Gui:
             self.svgfile = filedialog.askopenfile(mode='r', filetypes=(("SVG Datei", "*.svg"), ("All files", "*.*")))
         except:  # TODO: except only fileerror
             messagebox("Couldn't read file.")
+        cal.calculate(self.svgfile)
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass
 
     def aboutus(self):
-        messagebox.showinfo("About", "SVG Calculator\nCoded by: Culain and Civ0")
+        messagebox.showinfo("About", "SVG Calculator\nUsing Python 3.5\nCoded by: Culain and Civ0")
