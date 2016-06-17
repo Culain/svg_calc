@@ -28,14 +28,14 @@ def main():
         filename = 'svgFiles/test.svg'
 
     try:
-        svgfile = cal.load_svg(filename)
+        cal.calculate(filename)
     except ExpatError:
         print("Error while reading the file")
         exit()
 
 
-    res = cal.calculate(svgfile)
-    print(res)
+    # res = cal.calculate(svgfile)
+    # print(res)
 
     o_gui = gui.Gui()  # ===GUI stuff=== uncomment to disable
 

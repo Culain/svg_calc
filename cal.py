@@ -28,12 +28,20 @@ def load_svg(filename):
         raise ExpatError
 
 
-
-def calculate(svgfile):
+def calculate(filename):
     try:
-        dimensions = get_dimensions(svgfile)
-    except AttributeError:
-        print("Error. Can't find Dimensions in the File")  # TODO: Popup? via messagebox
+        svg_node = load_svg(filename)
+
+    except:
+        print("Error while loading file")
+        exit()
+
+
+
+    # try:
+    #     dimensions = get_dimensions(svgfile)
+    # except AttributeError:
+    #     print("Error. Can't find Dimensions in the File")  # TODO: Popup? via messagebox
 
 def get_dimensions(svgfile):
     height = svgfile.getAttribute('height')
