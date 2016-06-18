@@ -54,4 +54,4 @@ class Gui:
         pass
 
     def aboutus(self):
-        messagebox.showinfo("About", "SVG Calculator\nUsing Python 3.5\nCoded by: Culain and Civ0")
+        messagebox.showinfo("About", "SVG Calculator\nUsing Python 3.5\nCoded by: Culain and civ0")
