@@ -12,6 +12,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
+'''
+__version__ = 0.2
+__last_update__ = 2016/06/18
+__author__ = "Culain aka. lordfwahfnah", "civ0"
+'''
+
+
 import cal
 import gui
 # import exceptions
