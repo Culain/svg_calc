@@ -21,6 +21,7 @@ from xml.parsers.expat import ExpatError
 
 def main():
     filename = ''
+    sum = 0
     if platform.startswith('win32'):
         filename = 'svgFiles\\test.svg'
         # filename = 'svgFiles\\corrupt.svg'
@@ -28,11 +29,11 @@ def main():
         filename = 'svgFiles/test.svg'
 
     try:
-        cal.calculate(filename)
+        sum = cal.calculate(filename)
     except ExpatError:
         print("Error while reading the file")
         exit()
-
+    print(sum)
 
     # res = cal.calculate(svgfile)
     # print(res)

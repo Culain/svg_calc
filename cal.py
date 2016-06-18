@@ -15,6 +15,7 @@
 
 from xml.dom.minidom import parse
 from xml.parsers.expat import ExpatError
+from math import tan, sqrt
 
 # import exceptions
 
@@ -29,14 +30,25 @@ def load_svg(filename):
 
 
 def calculate(filename):
+    sum = 0
+
     try:
         svg_node = load_svg(filename)
-
     except:
         print("Error while loading file")
         exit()
+    lines = svg_node.getElementsByTagName('line')
+    polylines = svg_node.getElementsByTagName('polyline')
+    rectangles = svg_node.getElementsByTagName('rect')
+    ellipses = svg_node.getElementsByTagName('ellipse')
+    circles = svg_node.getElementsByTagName('circle')
+    paths = svg_node.getElementsByTagName('path')
+    polygons = svg_node.getElementsByTagName('polygon')
 
+    for line in lines:
+        sum += calc_node.line(line)
 
+    return sum
 
     # try:
     #     dimensions = get_dimensions(svgfile)
@@ -51,3 +63,22 @@ def get_dimensions(svgfile):
     width = width.replace('mm', '')
     dim = [float(width), float(height)]
     return dim
+
+class calc_node:
+
+    def line(node):
+        x1 = 0
+        x2 = 0
+        y1 = 0
+        y2 = 0
+
+        x1 = float(node.getAttribute('x1'))
+        y1 = float(node.getAttribute('y1'))
+        x2 = float(node.getAttribute('x2'))
+        y2 = float(node.getAttribute('y2'))
+
+        line_length = tan(sqrt(abs(x2 - x1)**2 + abs(y2 - y1)**2))
+        return line_length
+
+    def polyline(self, node):
+        pass
