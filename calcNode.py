@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 
-from math import tan, sqrt
+from math import tan, sqrt, pi
 
 
 class calc_node:
@@ -47,6 +47,38 @@ class calc_node:
             y1 = format_split[x-1][1]
             x2 = format_split[x][0]
             y2 = format_split[x][1]
-            line_length += tan(sqrt(abs(x2 - x1)**2 + abs(y2 - y1)**2))
+            line_length += sqrt(abs(x2 - x1)**2 + abs(y2 - y1)**2)
 
         return line_length
+
+    def rectangle(self):  # <rect class="fil0 str0" x="492" y="538" width="32.6813" height="27.0933"/>
+        x = float(self.getAttribute('width'))
+        y = float(self.getAttribute('height'))
+
+        line_length = x * 2 + y * 2
+
+        return line_length
+
+    def ellipses(self):  # <ellipse class="fil0 str0" cx="580" cy="553" rx="24" ry="13"/>
+        rx = float(self.getAttribute('rx'))
+        ry = float(self.getAttribute('ry'))
+
+        h = (rx - ry)**2 / (rx + ry)**2
+        line_length = pi * (rx + ry) * (1 + 3 * h / (10 + ((4 - 3*h)**0.5)))
+
+        return line_length
+
+    def circles(self):  # <circle class="fil0 str0" cx="671" cy="562" r="16"/>
+        r = float(self.getAttribute('r'))
+
+        line_length = pi * 2 * r
+
+        return line_length
+
+    def polygons(self):  # <polygon class="fil0 str0" points="441,539 452,546 462,552 458,563 454,574 441,574 429,574 425,563 421,552 431,546 "/>
+        line_length = calc_node.polyline(self)  # Same calculation
+
+        return line_length
+
+    def paths(self):  #<path id="10" class="fil1" d="M714 485c0,-3 1,-6 3,-8 1,-1 ... -2,5z"/>
+        pass

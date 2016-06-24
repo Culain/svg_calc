@@ -41,6 +41,9 @@ class Gui:
         menu.add_cascade(label="Help", menu=submenu_help)
         submenu_help.add_command(label="About", command=self.aboutus)
 
+        self.textfield01 = Label(frame, text="nothing calculated yet", font="14", height=20, width=64)
+        self.textfield01.pack()
+
         root.mainloop()  # loop to keep the Window open
 
     def askopenfile(self):
@@ -49,6 +52,10 @@ class Gui:
         except:  # TODO: except only fileerror
             messagebox("Couldn't read file.")
         # TODO: Add some code here to work with the file
+
+        temp_sum = cal.calculate(self.svgfile)
+        self.textfield01['text'] = '{:.2f}'.format(temp_sum)
+
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass

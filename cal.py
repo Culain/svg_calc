@@ -29,28 +29,42 @@ def load_svg(filename):
 
 
 def calculate(filename):
-    sum = 0
+    temp_sum = 0
 
-    try:
-        svg_node = load_svg(filename)
-    except:
-        print("Error while loading file")
-        exit()
-    lines = svg_node.getElementsByTagName('line')
-    polylines = svg_node.getElementsByTagName('polyline')
-    rectangles = svg_node.getElementsByTagName('rect')
-    ellipses = svg_node.getElementsByTagName('ellipse')
-    circles = svg_node.getElementsByTagName('circle')
-    paths = svg_node.getElementsByTagName('path')
-    polygons = svg_node.getElementsByTagName('polygon')
+    # try:
+    svg_node = load_svg(filename)
+    # except:
+    #     print("Error while loading file")
+    #     exit()
+    if svg_node:
+        lines = svg_node.getElementsByTagName('line')
+        polylines = svg_node.getElementsByTagName('polyline')
+        rectangles = svg_node.getElementsByTagName('rect')
+        ellipses = svg_node.getElementsByTagName('ellipse')
+        circles = svg_node.getElementsByTagName('circle')
+        paths = svg_node.getElementsByTagName('path')
+        polygons = svg_node.getElementsByTagName('polygon')
 
     for line in lines:
-        sum += calc_node.line(line)
+        temp_sum += calc_node.line(line)
 
     for polyline in polylines:
-        sum += calc_node.polyline(polyline)
+        temp_sum += calc_node.polyline(polyline)
 
-    return sum
+    for rectangle in rectangles:
+        temp_sum += calc_node.rectangle(rectangle)
+
+    for ellipse in ellipses:
+        temp_sum += calc_node.ellipses(ellipse)
+
+    for circle in circles:
+        temp_sum += calc_node.circles(circle)
+
+    for polygon in polygons:
+        temp_sum += calc_node.polygons(polygon)
+
+
+    return temp_sum
 
     # try:
     #     dimensions = get_dimensions(svgfile)
