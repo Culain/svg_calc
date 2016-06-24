@@ -13,8 +13,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
 '''
-__version__ = 0.3
-__last_update__ = 2016/06/20
+__version__ = 0.4
+__last_update__ = 2016/06/24
 __author__ = "Culain aka. lordfwahfnah", "civ0"
 '''
 
