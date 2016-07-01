@@ -36,14 +36,16 @@ def calculate(filename):
     # except:
     #     print("Error while loading file")
     #     exit()
-    if svg_node:
-        lines = svg_node.getElementsByTagName('line')
-        polylines = svg_node.getElementsByTagName('polyline')
-        rectangles = svg_node.getElementsByTagName('rect')
-        ellipses = svg_node.getElementsByTagName('ellipse')
-        circles = svg_node.getElementsByTagName('circle')
-        paths = svg_node.getElementsByTagName('path')
-        polygons = svg_node.getElementsByTagName('polygon')
+    if not svg_node:
+        return -1
+
+    lines = svg_node.getElementsByTagName('line')
+    polylines = svg_node.getElementsByTagName('polyline')
+    rectangles = svg_node.getElementsByTagName('rect')
+    ellipses = svg_node.getElementsByTagName('ellipse')
+    circles = svg_node.getElementsByTagName('circle')
+    paths = svg_node.getElementsByTagName('path')
+    polygons = svg_node.getElementsByTagName('polygon')
 
     for line in lines:
         temp_sum += calc_node.line(line)
