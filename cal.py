@@ -63,6 +63,8 @@ def calculate(filename):
     for polygon in polygons:
         temp_sum += calc_node.polygons(polygon)
 
+    for path in paths:
+        temp_sum += calc_node.paths(path)
 
     return temp_sum
 

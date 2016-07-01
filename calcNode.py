@@ -14,6 +14,7 @@
 
 
 from math import tan, sqrt, pi
+from svg.path import Path, Line, Arc, CubicBezier, QuadraticBezier, parse_path
 
 
 class calc_node:
@@ -80,5 +81,8 @@ class calc_node:
 
         return line_length
 
-    def paths(self):  #<path id="10" class="fil1" d="M714 485c0,-3 1,-6 3,-8 1,-1 ... -2,5z"/>
-        pass
+    def paths(self):  # <path class="fil1" d="M625 453l0 -19 3 0 0 2c1,-2 4,-3 6,-3 1,0 2,0 3,1 1,0 2,1 3,...6l0 10 -3 0z"/>
+        parsed_path = parse_path(self.getAttribute("d"))
+        line_length = parsed_path.length(error=1e-5)  # Error for faster calculation / lower accuracy
+
+        return line_length
