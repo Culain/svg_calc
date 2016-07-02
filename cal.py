@@ -70,6 +70,13 @@ def calculate(filename):
 
     return temp_sum
 
+def calculatetime(length):
+    speed = 1524  # mm/sec
+    length = length  # mm
+    timetoprint = length / speed # v = s/t  | s/v = t
+
+    return timetoprint
+
     # try:
     #     dimensions = get_dimensions(svgfile)
     # except AttributeError:

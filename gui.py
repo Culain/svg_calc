@@ -54,7 +54,10 @@ class Gui:
         # TODO: Add some code here to work with the file
 
         temp_sum = cal.calculate(self.svgfile)
-        self.textfield01['text'] = '{:.2f}'.format(temp_sum)
+        temp_time = cal.calculatetime(temp_sum)
+        temp_speedpercent = 100
+        self.textfield01['text'] = 'The length of all Lines in this Document is: {:.2f}mm\n' \
+                                   'The total time to print is: {:.2f} minutes at {:.2f}%'.format(temp_sum, temp_time, temp_speedpercent)
 
 
     def plot_preview(self):  # TODO: write "plotpreview"
