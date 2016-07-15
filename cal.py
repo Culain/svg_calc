@@ -20,22 +20,16 @@ from calcNode import calc_node
 
 
 def load_svg(filename):
-    try:
-        svgdoc = parse(filename)
-        rootnode = svgdoc.documentElement
-        return rootnode
-    except ExpatError:
-        raise ExpatError
+    svgdoc = parse(filename)
+    print("parsing...")
+    rootnode = svgdoc.documentElement
+
+    return rootnode
 
 
-def calculate(filename):
+def calculate(svg_node):
     temp_sum = 0
 
-    # try:
-    svg_node = load_svg(filename)
-    # except:
-    #     print("Error while loading file")
-    #     exit()
     if not svg_node:
         return -1
 
@@ -72,10 +66,11 @@ def calculate(filename):
 
 def calculatetime(length):
     speed = 1524  # mm/sec
-    length = length  # mm
-    timetoprint = length / speed # v = s/t  | s/v = t
+    length = length  # Umwandlung in mm
+    timetoprint = length / speed  # v = s/t  | s/v = t
+    truetimetoprint = timetoprint * 0.5  # * 1.37667304
 
-    return timetoprint
+    return truetimetoprint
 
     # try:
     #     dimensions = get_dimensions(svgfile)
@@ -86,8 +81,8 @@ def get_dimensions(svgfile):
     height = svgfile.getAttribute('height')
     width = svgfile.getAttribute('width')
     # TODO: unit conversions
-    height = height.replace('mm', '')
-    width = width.replace('mm', '')
-    dim = [float(width), float(height)]
+    height = float(height.replace('mm', ''))
+    width = float(width.replace('mm', ''))
+    dim = [width, height]
     return dim
 

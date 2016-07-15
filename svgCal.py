@@ -27,6 +27,7 @@ from xml.parsers.expat import ExpatError
 
 
 def main():
+    '''
     filename = ''
     sum = 0
     if platform.startswith('win32'):
@@ -44,6 +45,7 @@ def main():
 
     # res = cal.calculate(svgfile)
     # print(res)
+    '''
 
     o_gui = gui.Gui()  # ===GUI stuff=== uncomment to disable
 
