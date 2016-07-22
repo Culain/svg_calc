@@ -12,22 +12,20 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 
-'''
-__version__ = 0.5
-__last_update__ = 2016/07/01
-__author__ = "Culain aka. lordfwahfnah", "civ0"
-'''
+"""
+__version__ = 0.7
+__last_update__ = 2016/07/23
+__author__ = "Culain aka. lordfwahfnah", "civ0\"
+"""
 
-
-import cal
 import gui
 # import exceptions
-from sys import platform
-from xml.parsers.expat import ExpatError
+# from sys import platform
+# from xml.parsers.expat import ExpatError
 
 
 def main():
-    '''
+    """  # Debug foo
     filename = ''
     sum = 0
     if platform.startswith('win32'):
@@ -45,10 +43,9 @@ def main():
 
     # res = cal.calculate(svgfile)
     # print(res)
-    '''
+    """
 
     o_gui = gui.Gui()  # ===GUI stuff=== uncomment to disable
-
 
 if __name__ == '__main__':
     main()

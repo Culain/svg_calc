@@ -22,9 +22,9 @@ class Gui:
     def __init__(self):
         self.filename = ""  # init Variable
         self.svgfile = ""
-        self.temp_sum = 0
         self.temp_time = 0
-        self.temp_speedpercent = 100
+        self.length = 0
+        self.speedpercent = 100
 
         root = Tk()  # init Window
         root.wm_title("SVG-File Calculator")
@@ -49,51 +49,61 @@ class Gui:
         self.textfield00 = Label(frame, text='Cuttingspeed in percent: ', font="14")
         self.textfield10 = Label(frame, text="nothing calculated yet", font="14")  # height=20, width=64)
         self.textfield20 = Label(frame, text='nothing calculated yet', font="14")
-        self.prozent = Entry(frame, text='100', font="14")
+        self.percent = Entry(frame, text='100.0', font="14")
         self.buttonreload = Button(frame, text='reload', font="14", command=self.butreload)
-        self.buttonclear = Button(frame, text='clear', font="14")
+        self.buttonclear = Button(frame, text='clear', font="14", command=self.butclear)
 
         self.textfield00.grid(row=0, column=0)
         self.textfield10.grid(row=1, column=0)
         self.textfield20.grid(row=2, column=0)
-        self.prozent.grid(row=0, column=1, sticky=E)
+        self.percent.grid(row=0, column=1, sticky=E)
         self.buttonreload.grid(row=3, column=0)
         self.buttonclear.grid(row=3, column=1)
 
+        # if root.focus_get() != ".":
+        self.percent.focus_set()
+        
+        root.bind("<Return>", lambda x: self.butreload())
+        # root.bind("<Return>", lambda y: print(root.focus_get()))
+
         root.mainloop()  # loop to keep the Window open
+
+
 
     def askopenfile(self):
         try:
             self.filename = filedialog.askopenfile(mode='r', filetypes=(("SVG Datei", "*.svg"), ("All files", "*.*")))
         except:  # TODO: except only fileerror
             messagebox("Couldn't read file.")
-        # TODO: Add some code here to work with the file
-        # self.printmessages(self.temp_sum, self.temp_time, self.temp_speedpercent)
+        # self.printmessages(self.temp_sum, self.temp_time, self.speedpercent)
         self.svgfile = cal.load_svg(self.filename)
+        self.length = cal.calculate(self.svgfile)
         self.printmessages()
 
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass
 
-    def aboutus(self):
+    @staticmethod
+    def aboutus():
         messagebox.showinfo("About", "SVG Calculator\nUsing Python 3.5\nCoded by: Culain and civ0")
 
     def printmessages(self):
-        if self.prozent.get() != '':
-            self.temp_speedpercent = self.conv_speed_p(self.prozent.get())
-        else:
-            self.temp_speedpercent = 100
+        self.temp_speedpercent = self.speedpercent
 
-        if self.svgfile:
-            self.temp_sum = cal.calculate(self.svgfile)  # float
+        if self.percent.get() != '':  # error?
+            self.speedpercent = self.conv_speed_p(self.percent.get())
         else:
-            self.temp_sum = 0
-        self.temp_time = cal.calculatetime(self.temp_sum)
+            self.speedpercent = 100.0
 
-        self.textfield10['text'] = 'The length of all Lines in this Document is: {:.2f}mm'.format(self.temp_sum)
+        self.percent.delete(0, END)
+        self.percent.insert(0, self.speedpercent)
+
+        self.temp_time = cal.calculatetime(self.length, self.speedpercent)
+
+        self.textfield10['text'] = 'The length of all Lines in this Document is: {:.2f}mm'.format(self.length)
         self.textfield20['text'] = 'Total time to print is: {:.2f} minutes at {:.2f}%'.format(self.temp_time,
-                                                                                              self.temp_speedpercent)
+                                                                                              self.speedpercent)
 
     def butreload(self):
         self.printmessages()
@@ -105,12 +115,23 @@ class Gui:
             return y
 
         except ValueError:
-            pattern = r"(\d+)(,|.)?(\d*)"
-
+            pattern = r"(\d*)(,|.)?(\d*)"
             y = re.match(pattern, input)
-            if y == None:
-                return 0
-            z = y.group().split(",")
-            result = float(z[0] + "." + z[1])
+            print(y.string)
 
-            return result
+            if not y:
+                return 0
+            result = y.string.replace(",", ".")
+
+            try:
+                return float(result)
+            except ValueError:
+                return self.temp_speedpercent
+
+    def butclear(self):
+        self.filename = ""  # init Variable
+        self.svgfile = ""
+        self.length = 0
+        self.temp_time = 0
+        self.speedpercent = 100.0
+        self.printmessages()

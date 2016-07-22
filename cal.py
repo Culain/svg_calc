@@ -14,14 +14,16 @@
 
 
 from xml.dom.minidom import parse
-from xml.parsers.expat import ExpatError
-from calcNode import calc_node
+# from xml.parsers.expat import ExpatError
+from CalcNode import CalcNode
+
+
 # import exceptions
+
 
 
 def load_svg(filename):
     svgdoc = parse(filename)
-    print("parsing...")
     rootnode = svgdoc.documentElement
 
     return rootnode
@@ -42,33 +44,34 @@ def calculate(svg_node):
     polygons = svg_node.getElementsByTagName('polygon')
 
     for line in lines:
-        temp_sum += calc_node.line(line)
+        temp_sum += CalcNode.line(line)
 
     for polyline in polylines:
-        temp_sum += calc_node.polyline(polyline)
+        temp_sum += CalcNode.polyline(polyline)
 
     for rectangle in rectangles:
-        temp_sum += calc_node.rectangle(rectangle)
+        temp_sum += CalcNode.rectangle(rectangle)
 
     for ellipse in ellipses:
-        temp_sum += calc_node.ellipses(ellipse)
+        temp_sum += CalcNode.ellipses(ellipse)
 
     for circle in circles:
-        temp_sum += calc_node.circles(circle)
+        temp_sum += CalcNode.circles(circle)
 
     for polygon in polygons:
-        temp_sum += calc_node.polygons(polygon)
+        temp_sum += CalcNode.polygons(polygon)
 
     for path in paths:
-        temp_sum += calc_node.paths(path)
+        temp_sum += CalcNode.paths(path)
 
     return temp_sum
 
-def calculatetime(length):
+
+def calculatetime(length, percent):
     speed = 1524  # mm/sec
     length = length  # Umwandlung in mm
-    timetoprint = length / speed  # v = s/t  | s/v = t
-    truetimetoprint = timetoprint * 0.5  # * 1.37667304
+    timetoprint = length / (speed * (percent / 100))  # v = s/t  | s/v = t
+    truetimetoprint = timetoprint
 
     return truetimetoprint
 
@@ -76,6 +79,7 @@ def calculatetime(length):
     #     dimensions = get_dimensions(svgfile)
     # except AttributeError:
     #     print("Error. Can't find Dimensions in the File")  # TODO: Popup? via messagebox
+
 
 def get_dimensions(svgfile):
     height = svgfile.getAttribute('height')
@@ -85,4 +89,3 @@ def get_dimensions(svgfile):
     width = float(width.replace('mm', ''))
     dim = [width, height]
     return dim
-
