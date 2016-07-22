@@ -15,7 +15,7 @@
 """
 __version__ = 0.7
 __last_update__ = 2016/07/23
-__author__ = "Culain aka. lordfwahfnah", "civ0\"
+__author__ = "Culain aka. lordfwahfnah", "civ0"
 """
 
 import gui
