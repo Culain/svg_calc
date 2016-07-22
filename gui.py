@@ -15,6 +15,7 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
+
 import cal
 
 
@@ -24,7 +25,8 @@ class Gui:
         self.svgfile = ""
         self.temp_time = 0
         self.length = 0
-        self.speedpercent = 100
+        self.speedpercent = 100.0
+        self.temp_speedpercent = 100.0
 
         root = Tk()  # init Window
         root.wm_title("SVG-File Calculator")
@@ -62,24 +64,24 @@ class Gui:
 
         # if root.focus_get() != ".":
         self.percent.focus_set()
-        
+
         root.bind("<Return>", lambda x: self.butreload())
         # root.bind("<Return>", lambda y: print(root.focus_get()))
 
         root.mainloop()  # loop to keep the Window open
 
-
-
     def askopenfile(self):
         try:
             self.filename = filedialog.askopenfile(mode='r', filetypes=(("SVG Datei", "*.svg"), ("All files", "*.*")))
-        except:  # TODO: except only fileerror
-            messagebox("Couldn't read file.")
+        except FileExistsError:  # TODO: except only fileerror
+            # messagebox()
+            print("Couldn't read file.")
+        except FileNotFoundError:
+            print("File not found.")
         # self.printmessages(self.temp_sum, self.temp_time, self.speedpercent)
         self.svgfile = cal.load_svg(self.filename)
         self.length = cal.calculate(self.svgfile)
         self.printmessages()
-
 
     def plot_preview(self):  # TODO: write "plotpreview"
         pass
@@ -108,15 +110,15 @@ class Gui:
     def butreload(self):
         self.printmessages()
 
-    def conv_speed_p(self, input):
+    def conv_speed_p(self, percentinput):
 
         try:
-            y = float(input)
+            y = float(percentinput)
             return y
 
         except ValueError:
             pattern = r"(\d*)(,|.)?(\d*)"
-            y = re.match(pattern, input)
+            y = re.match(pattern, percentinput)
             print(y.string)
 
             if not y:

@@ -14,12 +14,8 @@
 
 
 from xml.dom.minidom import parse
-# from xml.parsers.expat import ExpatError
+
 from CalcNode import CalcNode
-
-
-# import exceptions
-
 
 
 def load_svg(filename):

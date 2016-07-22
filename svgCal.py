@@ -19,6 +19,8 @@ __author__ = "Culain aka. lordfwahfnah", "civ0\"
 """
 
 import gui
+
+
 # import exceptions
 # from sys import platform
 # from xml.parsers.expat import ExpatError
@@ -45,7 +47,9 @@ def main():
     # print(res)
     """
 
+    # noinspection PyUnusedLocal
     o_gui = gui.Gui()  # ===GUI stuff=== uncomment to disable
+
 
 if __name__ == '__main__':
     main()
