@@ -113,8 +113,10 @@ class Gui:
             self.length = cal.calculate(self.svgfile)
             self.txt_result_length_out.configure(text='{:.2f}mm'.format(self.length))
             self.update_gui(self)
-        except:
-            messagebox.showerror('File Error', 'Error while opening file.')
+        except FileExistsError:
+            messagebox.showerror('File Error')
+        except FileNotFoundError:
+            messagebox.showerror('Error: File not found.')
 
     def browse_file(self):
         try:
@@ -122,8 +124,10 @@ class Gui:
             self.update_entry(self.entry_filepath, self.filepath)
             if self.filepath:
                 self.load_file(self)
-        except:
-            messagebox.showerror('File Error', 'Error while opening file.')
+        except FileExistsError:
+            messagebox.showerror('File Error')
+        except FileNotFoundError:
+            messagebox.showerror('Error: File not found.')
 
     def plot_preview(self):  # TODO: write 'plotpreview'
         pass
