@@ -21,15 +21,15 @@ import cal
 
 class Gui:
     def __init__(self):
-        self.filename = ""  # init Variable
-        self.svgfile = ""
-        self.temp_time = 0
+        self.filename = ''  # init Variable
+        self.svgfile = ''
+        self.file = None
         self.length = 0
+        self.time = 0
         self.speedpercent = 100.0
-        self.temp_speedpercent = 100.0
 
         root = Tk()  # init Window
-        root.wm_title("SVG-File Calculator")
+        root.wm_title('SVG-File Calculator')
         frame = Frame(root)
         frame.grid()
 
@@ -38,102 +38,94 @@ class Gui:
         submenu_file = Menu(menu)
         submenu_help = Menu(menu)
         # =============== File
-        menu.add_cascade(label="File", menu=submenu_file)
-        submenu_file.add_command(label="Open", command=self.askopenfile)
-        submenu_file.add_command(label="Print Preview", command=self.plot_preview)
+        menu.add_cascade(label='File', menu=submenu_file)
+        submenu_file.add_command(label='Open', command=self.browse_file)
+        submenu_file.add_command(label='Print Preview', command=self.plot_preview)
         submenu_file.add_separator()
-        submenu_file.add_command(label="Exit", command=frame.quit)
+        submenu_file.add_command(label='Exit', command=frame.quit)
         # ================ Help
-        menu.add_cascade(label="Help", menu=submenu_help)
-        submenu_help.add_command(label="About", command=self.aboutus)
+        menu.add_cascade(label='Help', menu=submenu_help)
+        submenu_help.add_command(label='About', command=self.aboutus)
         # ================
 
-        self.textfield00 = Label(frame, text='Cuttingspeed in percent: ', font="14")
-        self.textfield10 = Label(frame, text="nothing calculated yet", font="14")  # height=20, width=64)
-        self.textfield20 = Label(frame, text='nothing calculated yet', font="14")
-        self.percent = Entry(frame, text='100.0', font="14")
-        self.buttonreload = Button(frame, text='reload', font="14", command=self.butreload)
-        self.buttonclear = Button(frame, text='clear', font="14", command=self.butclear)
+        self.txt_filepath = Label(frame, text='File', font='14')
+        self.txt_speed_percent = Label(frame, text='Cuttingspeed in percent', font='14')
+        self.txt_placeholder1 = Label(frame, text='', font='14')
+        self.txt_result_length = Label(frame, text='Calculated length', font='14')
+        self.txt_result_time = Label(frame, text='Calculated time', font='14')
+        self.txt_result_length_out = Label(frame, text='-', font='14')
+        self.txt_result_time_out = Label(frame, text='-', font='14')
+        self.entry_filepath = Entry(frame, font='14', width=60)
+        self.entry_speed_percent = Entry(frame, font='14')
+        self.entry_speed_percent.insert(0, '100.0')
+        self.btn_open_file = Button(frame, text='Browse', font='14', height=1, width=8, command=self.browse_file)
+        self.btn_calculate = Button(frame, text='Calculate', font='14', height=1, width=8, command=self.update_gui)
 
-        self.textfield00.grid(row=0, column=0)
-        self.textfield10.grid(row=1, column=0)
-        self.textfield20.grid(row=2, column=0)
-        self.percent.grid(row=0, column=1, sticky=E)
-        self.buttonreload.grid(row=3, column=0)
-        self.buttonclear.grid(row=3, column=1)
+        self.txt_filepath.grid(row=0, column=0, sticky=W)
+        self.txt_speed_percent.grid(row=1, column=0, sticky=W)
+        self.txt_placeholder1.grid(row=2, column=0, columnspan=3)
+        self.txt_result_length.grid(row=3, column=0, sticky=W)
+        self.txt_result_time.grid(row=4, column=0, sticky=W)
+        self.txt_result_length_out.grid(row=3, column=1, sticky=W)
+        self.txt_result_time_out.grid(row=4, column=1, sticky=W)
+        self.entry_filepath.grid(row=0, column=1, sticky=W+E)
+        self.entry_speed_percent.grid(row=1, column=1, sticky=W+E)
+        self.btn_open_file.grid(row=0, column=2)
+        self.btn_calculate.grid(row=1, column=2)
 
-        # if root.focus_get() != ".":
-        self.percent.focus_set()
-
-        root.bind("<Return>", lambda x: self.butreload())
-        # root.bind("<Return>", lambda y: print(root.focus_get()))
+        self.entry_filepath.bind('<Return>', self.load_file)
+        self.entry_speed_percent.bind('<Return>', self.update_gui)
+        self.entry_filepath.bind('<KP_Enter>', self.load_file)
+        self.entry_speed_percent.bind('<KP_Enter>', self.update_gui)
+        root.bind('<Escape>', lambda x: frame.quit())
 
         root.mainloop()  # loop to keep the Window open
 
-    def askopenfile(self):
-        try:
-            self.filename = filedialog.askopenfile(mode='r', filetypes=(("SVG Datei", "*.svg"), ("All files", "*.*")))
-        except FileExistsError:  # TODO: except only fileerror
-            # messagebox()
-            print("Couldn't read file.")
-        except FileNotFoundError:
-            print("File not found.")
-        # self.printmessages(self.temp_sum, self.temp_time, self.speedpercent)
-        self.svgfile = cal.load_svg(self.filename)
-        self.length = cal.calculate(self.svgfile)
-        self.printmessages()
+    def update_entry(self, entry, text):
+        entry.delete(0, END)
+        entry.insert(0, text)
 
-    def plot_preview(self):  # TODO: write "plotpreview"
+    def update_gui(self, event=''):
+        try:
+            pattern = r'(\d*)(,|.)?(\d*)'
+            input = self.entry_speed_percent.get()
+            tmp = re.match(pattern, input)
+            res = tmp.string.replace(',', '.')
+            res_float = float(res)
+            if res_float > 0 and res_float <= 100:
+                self.speedpercent = res_float
+                self.update_entry(self.entry_speed_percent, self.speedpercent)
+            else:
+                self.update_entry(self.entry_speed_percent, self.speedpercent)
+        except ValueError:
+            self.update_entry(self.entry_speed_percent, self.speedpercent)
+            return 0
+        self.time = cal.calculatetime(self.length, self.speedpercent)
+        self.txt_result_time_out.configure(text='{:.2f} minutes'.format(self.time))
+
+    def load_file(self, event=''):
+        try:
+            self.filepath = self.entry_filepath.get()
+            self.file = open(self.filepath, 'r')
+            self.svgfile = cal.load_svg(self.file)
+            self.length = cal.calculate(self.svgfile)
+            self.txt_result_length_out.configure(text='{:.2f}mm'.format(self.length))
+            self.update_gui(self)
+        except:
+            messagebox.showerror('File Error', 'Error while opening file.')
+
+    def browse_file(self):
+        try:
+            self.filepath = filedialog.askopenfilename(title='Select file', filetypes=(('SVG-Files', '*.svg'), ('All files', '*.*')))
+            self.update_entry(self.entry_filepath, self.filepath)
+            if self.filepath:
+                self.load_file(self)
+        except:
+            messagebox.showerror('File Error', 'Error while opening file.')
+
+    def plot_preview(self):  # TODO: write 'plotpreview'
         pass
 
     @staticmethod
     def aboutus():
-        messagebox.showinfo("About", "SVG Calculator\nUsing Python 3.5\nCoded by: Culain and civ0")
-
-    def printmessages(self):
-        self.temp_speedpercent = self.speedpercent
-
-        if self.percent.get() != '':  # error?
-            self.speedpercent = self.conv_speed_p(self.percent.get())
-        else:
-            self.speedpercent = 100.0
-
-        self.percent.delete(0, END)
-        self.percent.insert(0, self.speedpercent)
-
-        self.temp_time = cal.calculatetime(self.length, self.speedpercent)
-
-        self.textfield10['text'] = 'The length of all Lines in this Document is: {:.2f}mm'.format(self.length)
-        self.textfield20['text'] = 'Total time to print is: {:.2f} minutes at {:.2f}%'.format(self.temp_time,
-                                                                                              self.speedpercent)
-
-    def butreload(self):
-        self.printmessages()
-
-    def conv_speed_p(self, percentinput):
-
-        try:
-            y = float(percentinput)
-            return y
-
-        except ValueError:
-            pattern = r"(\d*)(,|.)?(\d*)"
-            y = re.match(pattern, percentinput)
-            print(y.string)
-
-            if not y:
-                return 0
-            result = y.string.replace(",", ".")
-
-            try:
-                return float(result)
-            except ValueError:
-                return self.temp_speedpercent
-
-    def butclear(self):
-        self.filename = ""  # init Variable
-        self.svgfile = ""
-        self.length = 0
-        self.temp_time = 0
-        self.speedpercent = 100.0
-        self.printmessages()
+        messagebox.showinfo('About', 'SVG Calculator\nUsing Python 3.5\nWritten by: Culain and civ0')
