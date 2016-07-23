@@ -112,7 +112,7 @@ class Gui:
             self.svgfile = cal.load_svg(self.file)
             self.length = cal.calculate(self.svgfile)
             self.txt_result_length_out.configure(text='{:.2f}mm'.format(self.length))
-            self.update_gui(self)
+            self.update_gui()
         except FileExistsError:
             messagebox.showerror('File Error')
         except FileNotFoundError:
@@ -123,7 +123,7 @@ class Gui:
             self.filepath = filedialog.askopenfilename(title='Select file', filetypes=(('SVG-Files', '*.svg'), ('All files', '*.*')))
             self.update_entry(self.entry_filepath, self.filepath)
             if self.filepath:
-                self.load_file(self)
+                self.load_file()
         except FileExistsError:
             messagebox.showerror('File Error')
         except FileNotFoundError:
