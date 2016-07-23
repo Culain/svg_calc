@@ -22,6 +22,7 @@ import cal
 class Gui:
     def __init__(self):
         self.filename = ''  # init Variable
+        self.filepath = ''
         self.svgfile = ''
         self.file = None
         self.length = 0
@@ -81,18 +82,19 @@ class Gui:
 
         root.mainloop()  # loop to keep the Window open
 
-    def update_entry(self, entry, text):
+    @staticmethod
+    def update_entry(entry, text):
         entry.delete(0, END)
         entry.insert(0, text)
 
     def update_gui(self, event=''):
         try:
             pattern = r'(\d*)(,|.)?(\d*)'
-            input = self.entry_speed_percent.get()
-            tmp = re.match(pattern, input)
+            user_input = self.entry_speed_percent.get()
+            tmp = re.match(pattern, user_input)
             res = tmp.string.replace(',', '.')
             res_float = float(res)
-            if res_float > 0 and res_float <= 100:
+            if 0 < res_float <= 100:
                 self.speedpercent = res_float
                 self.update_entry(self.entry_speed_percent, self.speedpercent)
             else:
