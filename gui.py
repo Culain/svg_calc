@@ -87,7 +87,7 @@ class Gui:
         entry.delete(0, END)
         entry.insert(0, text)
 
-    def update_gui(self, event=''):
+    def update_gui(self):
         try:
             pattern = r'(\d*)(,|.)?(\d*)'
             user_input = self.entry_speed_percent.get()
@@ -105,7 +105,7 @@ class Gui:
         self.time = cal.calculatetime(self.length, self.speedpercent)
         self.txt_result_time_out.configure(text='{:.2f} minutes'.format(self.time))
 
-    def load_file(self, event=''):
+    def load_file(self):
         try:
             self.filepath = self.entry_filepath.get()
             self.file = open(self.filepath, 'r')
