@@ -81,7 +81,7 @@ def get_dimensions(svgfile):
     height = svgfile.getAttribute('height')
     width = svgfile.getAttribute('width')
     # TODO: unit conversions
-    height = float(height.replace('mm', ''))
-    width = float(width.replace('mm', ''))
-    dim = [width, height]
+    height = height.replace('mm', '')
+    width = width.replace('mm', '')
+    dim = [float(width), float(height)]
     return dim

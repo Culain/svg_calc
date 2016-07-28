@@ -41,7 +41,7 @@ class Gui:
         # =============== File
         menu.add_cascade(label='File', menu=submenu_file)
         submenu_file.add_command(label='Open', command=self.browse_file)
-        submenu_file.add_command(label='Print Preview', command=self.plot_preview)
+        submenu_file.add_command(label='Print Preview', command=self.print_preview)
         submenu_file.add_separator()
         submenu_file.add_command(label='Exit', command=frame.quit)
         # ================ Help
@@ -61,6 +61,7 @@ class Gui:
         self.entry_speed_percent.insert(0, '100.0')
         self.btn_open_file = Button(frame, text='Browse', font='14', height=1, width=8, command=self.browse_file)
         self.btn_calculate = Button(frame, text='Calculate', font='14', height=1, width=8, command=self.update_gui)
+        self.btn_print_preview = Button(frame, text='Preview', font='14', height=1, width=8, command=self.print_preview)
 
         self.txt_filepath.grid(row=0, column=0, sticky=W)
         self.txt_speed_percent.grid(row=1, column=0, sticky=W)
@@ -73,6 +74,7 @@ class Gui:
         self.entry_speed_percent.grid(row=1, column=1, sticky=W+E)
         self.btn_open_file.grid(row=0, column=2)
         self.btn_calculate.grid(row=1, column=2)
+        self.btn_print_preview.grid(row=2, column=2)
 
         self.entry_filepath.bind('<Return>', self.load_file)
         self.entry_speed_percent.bind('<Return>', self.update_gui)
@@ -129,8 +131,17 @@ class Gui:
         except FileNotFoundError:
             messagebox.showerror('Error: File not found.')
 
-    def plot_preview(self):  # TODO: write 'plotpreview'
-        pass
+    def print_preview(self):  # TODO: write 'plotpreview'
+        if self.file:
+            dimension = cal.get_dimensions(self.svgfile)
+        else:
+            return 0
+
+        root = Tk()  # init Window
+        root.wm_title('Preview Window')
+        preview_frame = Frame(root, height=dimension[1], width=dimension[0])
+        preview_frame.grid()
+
 
     @staticmethod
     def aboutus():
