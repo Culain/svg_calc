@@ -15,7 +15,6 @@
 from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
-
 import cal
 
 
@@ -23,6 +22,7 @@ class Gui:
     def __init__(self):
         self.filename = ''  # init Variable
         self.filepath = ''
+        self.filepath2 = ''
         self.svgfile = ''
         self.file = None
         self.length = 0
@@ -123,6 +123,7 @@ class Gui:
     def browse_file(self):
         try:
             self.filepath = filedialog.askopenfilename(title='Select file', filetypes=(('SVG-Files', '*.svg'), ('All files', '*.*')))
+            self.filepath2 = self.filepath
             self.update_entry(self.entry_filepath, self.filepath)
             if self.filepath:
                 self.load_file()
@@ -139,8 +140,62 @@ class Gui:
 
         root = Tk()  # init Window
         root.wm_title('Preview Window')
-        preview_frame = Frame(root, height=dimension[1], width=dimension[0])
-        preview_frame.grid()
+        # preview_frame = Frame(root, height=dimension[1], width=dimension[0])
+        # preview_frame.pack()
+
+
+        # preview_canvas = Canvas(master=root, width=dimension[0], height=dimension[1])
+        # preview_canvas.pack()
+        #
+        # lines = self.svgfile.getElementsByTagName('line')
+        # polylines = self.svgfile.getElementsByTagName('polyline')
+        # rectangles = self.svgfile.getElementsByTagName('rect')
+        # ellipses = self.svgfile.getElementsByTagName('ellipse')
+        # circles = self.svgfile.getElementsByTagName('circle')
+        # paths = self.svgfile.getElementsByTagName('path')
+        # polygons = self.svgfile.getElementsByTagName('polygon')
+        #
+        # for line in lines:
+        #     x1 = float(line.getAttribute('x1'))
+        #     y1 = float(line.getAttribute('y1'))
+        #     x2 = float(line.getAttribute('x2'))
+        #     y2 = float(line.getAttribute('y2'))
+        #     preview_canvas.create_line(x1, y1, x2, y2)
+        #
+        # for polyline in polylines:
+        #     poly = polyline.getAttribute('points')
+        #     polysplit = poly.split(' ')[:-1]
+        #     format_split = []
+        #     for split in polysplit:
+        #         split = split.split(',')
+        #         temp = [float(split[0]), float(split[1])]
+        #         format_split.append(temp)
+        #
+        #     for x in range(1, len(format_split)):
+        #         x1 = format_split[x - 1][0]
+        #         y1 = format_split[x - 1][1]
+        #         x2 = format_split[x][0]
+        #         y2 = format_split[x][1]
+        #         preview_canvas.create_line(x1, y1, x2, y2)
+        #
+        # for rectangle in rectangles:
+        #     x1 = float(rectangle.getAttribute('x'))
+        #     y1 = float(rectangle.getAttribute('y'))
+        #     x2 = x1 + float(rectangle.getAttribute('width'))
+        #     y2 = y1 + float(rectangle.getAttribute('height'))
+        #     preview_canvas.create_rectangle(x1, y1, x2, y2)
+        #
+        # for ellipse in ellipses:
+        #
+        #     if ellipse.getAttribute('transform'):
+        #         matrix = ellipse.getAttribute('transform')
+        #         print(matrix)
+        #     else:
+        #         x1 = float(ellipse.getAttribute('cx'))
+        #         y1 = float(ellipse.getAttribute('cy'))
+        #         x2 = x1 + float(ellipse.getAttribute('rx'))
+        #         y2 = y1 + float(ellipse.getAttribute('ry'))
+        #         preview_canvas.create_oval(x1, y1, x2, y2)
 
 
     @staticmethod
