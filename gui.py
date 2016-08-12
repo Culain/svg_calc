@@ -16,7 +16,8 @@ from tkinter import *
 from tkinter import filedialog
 from tkinter import messagebox
 import cal
-
+from os import curdir
+from sys import platform
 
 class Gui:
     def __init__(self):
@@ -28,6 +29,11 @@ class Gui:
         self.length = 0
         self.time = 0
         self.speedpercent = 100.0
+        if platform.startswith('win32'):
+            self.cfgfile = curdir + "\config.cfg"
+        elif platform.startswith('linux'):
+            self.cfgfile = curdir + "/config.cfg"
+
 
         root = Tk()  # init Window
         root.wm_title('SVG-File Calculator')
@@ -81,6 +87,9 @@ class Gui:
         self.entry_filepath.bind('<KP_Enter>', self.load_file)
         self.entry_speed_percent.bind('<KP_Enter>', self.update_gui)
         root.bind('<Escape>', lambda x: frame.quit())
+
+        # messagebox.showinfo('Information',
+        #                     'Right now only SVG Files from CorelDRAW X7 are supported. More will be added later')  # Disable for testing
 
         root.mainloop()  # loop to keep the Window open
 
@@ -140,8 +149,8 @@ class Gui:
 
         root = Tk()  # init Window
         root.wm_title('Preview Window')
-        # preview_frame = Frame(root, height=dimension[1], width=dimension[0])
-        # preview_frame.pack()
+        preview_frame = Frame(root, height=dimension[1], width=dimension[0])
+        preview_frame.pack()
 
 
         # preview_canvas = Canvas(master=root, width=dimension[0], height=dimension[1])
@@ -201,3 +210,6 @@ class Gui:
     @staticmethod
     def aboutus():
         messagebox.showinfo('About', 'SVG Calculator\nUsing Python 3.5\nWritten by: Culain and civ0')
+
+    def load_cfg(self):  # TODO: load_cfg implementieren
+        pass
